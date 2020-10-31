@@ -1,6 +1,6 @@
 <?php 
 
-  class Database {
+  class Config {
     private const DBHOST = 'localhost';
     private const DBUSER = 'root';
     private const DBPASS = '';
