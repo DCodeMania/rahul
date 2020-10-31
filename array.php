@@ -186,7 +186,7 @@
   // array_pop($colors);
   // print_r($colors);
 
-  $merged_array = array_merge($colors, $numbers);
+  // $merged_array = array_merge($colors, $numbers);
   print_r($merged_array);
 
   ?>
