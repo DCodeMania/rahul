@@ -84,19 +84,8 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Sahil</td>
-                <td>Kumar</td>
-                <td>sahil@gmail.com</td>
-                <td>7896541256</td>
-                <td>
-                  <a href="#" class="text-primary" title="View Details"><i class="fas fa-info-circle fa-lg fa-fw"></i></a>
-                  <a href="#" class="text-success" title="Edit"><i class="fas fa-edit fa-lg fa-fw"></i></a>
-                  <a href="#" class="text-danger" title="Delete"><i class="fas fa-trash fa-lg fa-fw"></i></a>
-                </td>
-              </tr>
+            <tbody id="displayAllUsers">
+
             </tbody>
           </table>
         </div>

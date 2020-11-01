@@ -19,10 +19,24 @@ $(function () {
           $(form)[0].reset();
           $(form).removeClass("was-validated");
           $("#addNewUserModal").modal("hide");
+          fetchAllUsers();
         },
       });
     }
     $(form).addClass("was-validated");
     return false;
   });
+
+  // Fetch All Users Ajax Request
+  fetchAllUsers();
+  function fetchAllUsers() {
+    $.ajax({
+      url: "action.php",
+      method: "post",
+      data: { fetch_all_users: 1 },
+      success: function (response) {
+        $("#displayAllUsers").html(response);
+      },
+    });
+  }
 });

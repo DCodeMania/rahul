@@ -15,6 +15,15 @@
       ]);
       return true;
     }
+
+    // Select All Users From Database
+    public function select() {
+      $sql = 'SELECT * FROM users ORDER BY id DESC';
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      return $result;
+    }
   }
 
 ?>
