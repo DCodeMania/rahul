@@ -23,6 +23,48 @@
         <div class="modal-body">
           <form id="add-user-form" class="p-2" novalidate>
             <div class="form-group">
+              <input type="text" name="fname" class="form-control form-control-lg" placeholder="Enter First Name" required>
+              <div class="invalid-feedback">First name is required!</div>
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="lname" class="form-control form-control-lg" placeholder="Enter Last Name" required>
+              <div class="invalid-feedback">Last name is required!</div>
+            </div>
+
+            <div class="form-group">
+              <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter E-mail" required>
+              <div class="invalid-feedback">E-mail is required!</div>
+            </div>
+
+            <div class="form-group">
+              <input type="tel" name="phone" class="form-control form-control-lg" placeholder="Enter Phone" required>
+              <div class="invalid-feedback">Phone is required!</div>
+            </div>
+
+            <div class="form-group">
+              <input type="submit" value="Add User" class="btn btn-primary btn-block btn-lg" id="add-user-btn">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add New User Modal End -->
+  <!-- Edit User Modal Start -->
+  <div class="modal fade" tabindex="-1" data-backdrop="static" id="editUserModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit This User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-user-form" class="p-2" novalidate>
+            <input type="hidden" name="id" id="editId">
+            <div class="form-group">
               <input type="text" name="fname" id="fname" class="form-control form-control-lg" placeholder="Enter First Name" required>
               <div class="invalid-feedback">First name is required!</div>
             </div>
@@ -43,14 +85,14 @@
             </div>
 
             <div class="form-group">
-              <input type="submit" value="Add User" class="btn btn-primary btn-block btn-lg" id="add-user-btn">
+              <input type="submit" value="Update User" class="btn btn-success btn-block btn-lg" id="edit-user-btn">
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <!-- Add New User Modal End -->
+  <!-- Edit User Modal End -->
   <div class="container">
     <div class="row mt-4">
       <div class="col-lg-12 d-flex justify-content-between align-items-center">

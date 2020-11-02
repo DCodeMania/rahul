@@ -24,6 +24,29 @@
       $result = $stmt->fetchAll();
       return $result;
     }
+
+    // Select User by Id
+    public function getUserById($id) {
+      $sql = 'SELECT * FROM users WHERE id = :id';
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute(['id' => $id]);
+      $result = $stmt->fetch();
+      return $result;
+    }
+
+    // Update Single User
+    public function update($id, $fname, $lname, $email, $phone) {
+      $sql = 'UPDATE users SET first_name = :fname, last_name = :lname, email = :email, phone = :phone, updated_at = NOW() WHERE id = :id';
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute([
+        'fname' => $fname,
+        'lname' => $lname,
+        'email' => $email,
+        'phone' => $phone,
+        'id' => $id
+      ]);
+      return true;
+    }
   }
 
 ?>
