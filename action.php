@@ -73,4 +73,39 @@
     }
   }
 
+  // Handle Image Upload Ajax Request
+  if (isset($_POST['upload'])) {
+    $file_name = $_FILES['image']['name'];
+    $file_size = $_FILES['image']['size'];
+    $file_tmp = $_FILES['image']['tmp_name'];
+    $error = $_FILES['image']['error'];
+
+    $allowed_ext = ['jpg', 'png', 'gif'];
+    $tmp_ext = explode('.', $file_name);
+    $ext = strtolower(end($tmp_ext));
+
+    $upload_dir = 'upload/';
+    $upload_file_name = uniqid() . '.' . $ext;
+    $destination = $upload_dir . $upload_file_name;
+
+    if (!file_exists($destination)) {
+      if (!$error) {
+        if (in_array($ext, $allowed_ext)) {
+          if ($file_size <= 1000000) {
+            move_uploaded_file($file_tmp, $destination);
+            echo $util->showMessage('success', 'Image Uploaded Successfully!');
+          } else {
+            echo $util->showMessage('danger', 'Image size should be less or equal to 1 MB!');
+          }
+        } else {
+          echo $util->showMessage('info', 'This file type is not allowed to upload!');
+        }
+      } else {
+        echo $util->showMessage('danger', 'Something went wrong!');
+      }
+    } else {
+      echo $util->showMessage('danger', 'Image already exist in the database!');
+    }
+  }
+
 ?>
