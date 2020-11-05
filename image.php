@@ -22,6 +22,15 @@
             </div>
             <form method="POST" id="image-upload-form" enctype="multipart/form-data">
               <div class="form-group">
+                <input type="text" name="pname" id="pname" class="form-control" placeholder="Enter product name" required>
+              </div>
+
+              <div class="form-group">
+                <input type="number" name="pprice" id="pprice" class="form-control" placeholder="Enter product price" required>
+              </div>
+
+              <div class="form-group">
+                <label for="image">Select Product Image</label>
                 <input type="file" name="image" id="image" class="form-control p-1" required>
               </div>
 
@@ -72,7 +81,7 @@
         } else {
           $("#image-preview").html('');
           $("#image-upload-btn").prop('disabled', true);
-          $("#alertMessage").html(showMessage('danger', 'File size should be less or equal to 1MB!'))
+          $("#alertMessage").html(showMessage('danger', 'File size should be less or equal to 1MB!'));
         }
       } else {
         $("#image-preview").html('');

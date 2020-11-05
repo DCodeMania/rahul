@@ -47,6 +47,27 @@
       ]);
       return true;
     }
+
+    // Insert Product Details into Database
+    public function insertProduct($pname, $pprice, $pimage) {
+      $sql = 'INSERT INTO products (pname, pprice, pimage) VALUES (:pname, :pprice, :pimage)';
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute([
+        'pname' => $pname,
+        'pprice' => $pprice,
+        'pimage' => $pimage
+      ]);
+      return true;
+    }
+
+    // Fetch All Products from Database
+    public function fetchAllProducts() {
+      $sql = 'SELECT * FROM products';
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      return $result;
+    }
   }
 
 ?>

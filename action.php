@@ -75,6 +75,8 @@
 
   // Handle Image Upload Ajax Request
   if (isset($_POST['upload'])) {
+    $pname = $util->testInput($_POST['pname']);
+    $pprice = $util->testInput($_POST['pprice']);
     $file_name = $_FILES['image']['name'];
     $file_size = $_FILES['image']['size'];
     $file_tmp = $_FILES['image']['tmp_name'];
@@ -92,8 +94,10 @@
       if (!$error) {
         if (in_array($ext, $allowed_ext)) {
           if ($file_size <= 1000000) {
-            move_uploaded_file($file_tmp, $destination);
-            echo $util->showMessage('success', 'Image Uploaded Successfully!');
+            compress($file_tmp, $destination, 75);
+            if ($db->insertProduct($pname, $pprice, $destination)) {
+              echo $util->showMessage('success', 'Product Inserted Successfully!');
+            }
           } else {
             echo $util->showMessage('danger', 'Image size should be less or equal to 1 MB!');
           }
@@ -105,6 +109,43 @@
       }
     } else {
       echo $util->showMessage('danger', 'Image already exist in the database!');
+    }
+  }
+
+  function compress($source, $destination, $quality) {
+    $info = getimagesize($source);
+
+    if ($info['mime'] == 'image/jpeg') {
+      $image = imagecreatefromjpeg($source);
+    } elseif ($info['mime'] == 'image/gif') {
+      $image = imagecreatefromgif($source);
+    } elseif ($info['mime'] == 'image/png') {
+      $image = imagecreatefrompng($source);
+    }
+    imagejpeg($image, $destination, $quality);
+    return $destination;
+  }
+
+  // Handle Fetch All Products
+  if (isset($_POST['fetch_all_products'])) {
+    $products = $db->fetchAllProducts();
+    $output = '';
+    if ($products) {
+      foreach ($products as $row) {
+        $output .= '<tr>
+                      <td>' . $row['id'] . '</td>
+                      <td><img src="' . $row['pimage'] . '" class="img-fluid img-thumbnail" width="60"></td>
+                      <td>' . $row['pname'] . '</td>
+                      <td>' . $row['pprice'] . '</td>
+                      <td>
+                        <a href="#" class="btn btn-primary btn-sm rounded-pill">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm rounded-pill">Delete</a>
+                      </td>
+                    </tr>';
+      }
+      echo $output;
+    } else {
+      echo '<h4>No Products found!</h4>';
     }
   }
 
