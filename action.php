@@ -138,7 +138,8 @@
                       <td>' . $row['pname'] . '</td>
                       <td>' . $row['pprice'] . '</td>
                       <td>
-                        <a href="#" class="btn btn-primary btn-sm rounded-pill">Edit</a>
+                        <a href="#" id="' . $row['id'] . '" class="btn btn-primary btn-sm rounded-pill editBtn" data-toggle="modal" data-target="#editProductModal">Edit</a>
+
                         <a href="#" class="btn btn-danger btn-sm rounded-pill">Delete</a>
                       </td>
                     </tr>';
@@ -146,6 +147,49 @@
       echo $output;
     } else {
       echo '<h4>No Products found!</h4>';
+    }
+  }
+
+  // Handle Fetch Single Product Ajax Request
+  if (isset($_POST['edit_product_id'])) {
+    $pid = $_POST['edit_product_id'];
+
+    $product = $db->fetchAllProducts($pid);
+    echo json_encode($product[0]);
+  }
+
+  // Handle Update Product Details Ajax Request
+  if (isset($_POST['update_product'])) {
+    $pid = $util->testInput($_POST['pid']);
+    $pname = $util->testInput($_POST['pname']);
+    $pprice = $util->testInput($_POST['pprice']);
+    $old_image = $_POST['old_image'];
+
+    $file_name = $_FILES['pimage']['name'];
+    $file_tmp = $_FILES['pimage']['tmp_name'];
+
+    $allowed_ext = ['jpg', 'png', 'gif'];
+    $tmp_ext = explode('.', $file_name);
+    $ext = strtolower(end($tmp_ext));
+
+    $upload_dir = 'upload/';
+    $upload_file_name = uniqid() . '.' . $ext;
+    $destination = $upload_dir . $upload_file_name;
+
+    if (isset($file_name) && $file_name != '') {
+      $newImagePath = $destination;
+      compress($file_tmp, $destination, 75);
+      if ($old_image != null) {
+        unlink($old_image);
+      }
+    } else {
+      $newImagePath = $old_image;
+    }
+
+    if ($db->updateProduct($pid, $pname, $pprice, $newImagePath)) {
+      echo $util->showMessage('success', 'Product updated successfully!');
+    } else {
+      echo $util->showMessage('danger', 'Something went wrong!');
     }
   }
 

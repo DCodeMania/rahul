@@ -61,12 +61,29 @@
     }
 
     // Fetch All Products from Database
-    public function fetchAllProducts() {
+    public function fetchAllProducts($id = 0) {
       $sql = 'SELECT * FROM products';
+      if ($id != 0) {
+        $sql .= ' WHERE id = :id';
+      }
       $stmt = $this->conn->prepare($sql);
-      $stmt->execute();
+      $stmt->execute(['id' => $id]);
       $result = $stmt->fetchAll();
       return $result;
+    }
+
+    // Update Prodcut Info into Database
+    public function updateProduct($pid, $pname, $pprice, $pimage) {
+      $sql = 'UPDATE products SET pname = :pname, pprice = :pprice, pimage = :pimage, updated = NOW() WHERE id = :pid';
+
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute([
+        'pname' => $pname,
+        'pprice' => $pprice,
+        'pimage' => $pimage,
+        'pid' => $pid
+      ]);
+      return true;
     }
   }
 
