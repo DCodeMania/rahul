@@ -85,6 +85,14 @@
       ]);
       return true;
     }
+
+    // Delete Product
+    public function deleteProduct($id) {
+      $sql = 'DELETE FROM products WHERE id = :id';
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute(['id' => $id]);
+      return true;
+    }
   }
 
 ?>

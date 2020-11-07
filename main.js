@@ -3,6 +3,7 @@ $(function () {
   // Add New User Ajax Request
   $("#add-user-form").submit(function (e) {
     let form = $(this)[0];
+    e.preventDefault();
 
     if (!form.checkValidity()) {
       e.preventDefault();

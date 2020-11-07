@@ -69,8 +69,9 @@
     }
 
     $("#image").change(function() {
-
+      // Extract file extension
       let ext = $(this).val().split('.').pop().toLowerCase();
+
       const allowed_ext = ['jpg', 'png', 'jpeg', 'gif'];
 
       if ($.inArray(ext, allowed_ext) != -1) {
@@ -89,8 +90,6 @@
         $("#alertMessage").html(showMessage('danger', 'File type not supported!'));
       }
     });
-
-
 
     $("#image-upload-form").submit(function(e) {
       e.preventDefault();

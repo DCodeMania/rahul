@@ -66,6 +66,9 @@
             <h4>All Products in the database!</h4>
           </div>
           <div class="card-body">
+            <div id="deleteAlert">
+
+            </div>
             <div class="table-responsive">
               <table class="table table-striped table-hover text-center">
                 <thead>
@@ -189,6 +192,27 @@
         contentType: false,
         success: function(res) {
           $("#alertMessage").html(res);
+          fetchAllProducts();
+        }
+      });
+    });
+
+    // Delete Product Ajax Request With Image
+    $(document).on('click', '.deleteBtn', function(e) {
+      e.preventDefault();
+      let pid = $(this).attr('id');
+      let pimage = $(this).attr('data-image');
+
+      $.ajax({
+        url: 'action.php',
+        method: 'post',
+        data: {
+          pid: pid,
+          pimage: pimage,
+          delete_product: 1
+        },
+        success: function(res) {
+          $("#deleteAlert").html(res);
           fetchAllProducts();
         }
       });

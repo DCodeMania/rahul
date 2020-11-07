@@ -140,7 +140,7 @@
                       <td>
                         <a href="#" id="' . $row['id'] . '" class="btn btn-primary btn-sm rounded-pill editBtn" data-toggle="modal" data-target="#editProductModal">Edit</a>
 
-                        <a href="#" class="btn btn-danger btn-sm rounded-pill">Delete</a>
+                        <a href="#" id="' . $row['id'] . '" data-image="' . $row['pimage'] . '" class="btn btn-danger btn-sm rounded-pill deleteBtn">Delete</a>
                       </td>
                     </tr>';
       }
@@ -188,6 +188,20 @@
 
     if ($db->updateProduct($pid, $pname, $pprice, $newImagePath)) {
       echo $util->showMessage('success', 'Product updated successfully!');
+    } else {
+      echo $util->showMessage('danger', 'Something went wrong!');
+    }
+  }
+
+  // Handle Delete Product Ajax Request
+  if (isset($_POST['delete_product'])) {
+    $pid = $_POST['pid'];
+    $pimage = $_POST['pimage'];
+
+    unlink($pimage);
+
+    if ($db->deleteProduct($pid)) {
+      echo $util->showMessage('success', 'Product deleted successfully!');
     } else {
       echo $util->showMessage('danger', 'Something went wrong!');
     }
